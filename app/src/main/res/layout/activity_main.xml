@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:background="#2E7D32">
+
+    <!-- Contenido principal (ajustado para centrar tvHello) -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Fila superior: botones "Control Cerco" y "Cargar Contingencia" -->
+        <LinearLayout
+            android:id="@+id/topButtonsRow"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_gravity="top">          <!-- añadido: mantiene la fila en la parte superior -->
+
+            <Button
+                android:id="@+id/btnControlCerco"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Control Cerco"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_guardar_bg" />
+
+            <Button
+                android:id="@+id/btnCargarContingencia"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Cargar Contingencia"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/btn_guardar_bg" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHello"
+            android:text="Hola, La Calandria"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- ...existing code / espacio para el resto de la UI... -->
+
+    </LinearLayout>
+
+    <!-- Botón Volver: fondo transparente para que no se note -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|start"
+        android:text="←"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:textColor="#000000"
+        android:elevation="0dp"
+        android:contentDescription="Volver" />
+
+</FrameLayout>

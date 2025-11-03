@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:background="#2E7D32">
+
+    <!-- Contenido principal -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Texto central: título / branding -->
+        <TextView
+            android:id="@+id/tvHello"
+            android:text="La Calandria System Control"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Fila para seleccionar fecha (ahora con estilo consistente) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnSelectDate"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Seleccionar fecha"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_guardar_bg" />
+
+            <TextView
+                android:id="@+id/tvSelectedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Todas"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnClearDate"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="12dp"
+                android:text="Limpiar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_guardar_bg" />
+        </LinearLayout>
+
+        <!-- Botón Consultar (estilizado igual) -->
+        <Button
+            android:id="@+id/btnConsultar"
+            android:text="Consultar"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_guardar_bg" />
+
+        <!-- Nuevo: botón para consultar alarmas programadas -->
+        <Button
+            android:id="@+id/btnConsultarAlarmas"
+            android:text="Ver Alarmas"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_guardar_bg" />
+
+        <!-- Contenedor donde AdminActivity añade filas de registros -->
+        <ScrollView
+            android:id="@+id/svRecords"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/llRecords"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp">
+                <!-- filas añadidas dinámicamente desde AdminActivity -->
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!-- Espacio para botón Volver si se desea en contenido (seguimos usando btnVolver fijo) -->
+    </LinearLayout>
+
+    <!-- Botón Volver (esquina inferior izquierda) -->
+    <Button
+        android:id="@+id/btnVolverAdmin"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|start"
+        android:text="←"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:textColor="#000000"
+        android:elevation="0dp"
+        android:contentDescription="Volver" />
+
+</FrameLayout>

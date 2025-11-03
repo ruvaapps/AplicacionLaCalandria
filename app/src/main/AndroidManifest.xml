@@ -1,0 +1,67 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools" package="com.lacalandria.applacalandria">
+
+    <!-- Añadido: permiso para reagendar tras reinicio (si luego agregás BootReceiver) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <!-- Añadido: permiso de internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:label="La Calandria"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
+
+        <!-- LoginActivity será la de lanzamiento -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- HomeActivity -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true" />
+
+        <!-- Nueva Activity para Control Cerco -->
+        <activity
+            android:name=".ControlCercoActivity"
+            android:exported="true" />
+
+        <!-- Mantener Main si la necesitás -->
+        <activity
+            android:name=".Main"
+            android:exported="true" />
+
+        <!-- AdminActivity -->
+        <activity
+            android:name=".AdminActivity"
+            android:exported="true" />
+
+        <!-- Receiver para la alarma diaria -->
+        <receiver
+            android:name=".AlarmReceiver"
+            android:exported="true" />
+
+        <!-- Nuevo: BootReceiver para reprogramar alarmas tras reinicio/actualización -->
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,5 @@
+rootProject.name = "AppLaCalandria"
+include ':app'
+
+// Asegura que el include apunta al directorio correcto
+project(':app').projectDir = file('app')

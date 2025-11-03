@@ -1,0 +1,38 @@
+// Nota rápida: para ejecutar en IntelliJ:
+// 1) File -> Open -> abre la carpeta raíz (contiene settings.gradle).
+// 2) Espera a que IntelliJ sincronice Gradle (si falta el wrapper: ejecutar 'gradle wrapper' en la raíz).
+// 3) Configura Android SDK en File -> Project Structure -> SDKs (instala API 33 si hace falta).
+// 4) Inicia un AVD o conecta un dispositivo USB con depuración.
+// 5) Run -> Edit Configurations -> + -> Android App -> Module: app -> Apply.
+// 6) Build -> Make Project -> Run -> app.
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.lacalandria.applacalandria"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // ...existing code...
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    // agrega más dependencias si las necesitas
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+}

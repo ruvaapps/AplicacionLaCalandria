@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:background="#2E7D32">
+
+    <!-- Contenido principal -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Fila superior: botones "Mapa" y "Instructivo" (reemplaza los anteriores) -->
+        <LinearLayout
+            android:id="@+id/topButtonsRow"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <Button
+                android:id="@+id/btnMapa"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Mapa"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_guardar_bg" />
+
+            <Button
+                android:id="@+id/btnInstructivo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Instructivo"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/btn_guardar_bg" />
+        </LinearLayout>
+
+        <!-- Título / subtítulo específicos de Control Cerco -->
+        <TextView
+            android:id="@+id/tvControlTitle"
+            android:text="Control Cerco"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvTimestamp"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Spinner Tramo -->
+        <TextView
+            android:id="@+id/tvTramoLabel"
+            android:text="Tramo"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- { changed: spinner con fondo blanco + popup blanco } -->
+        <Spinner
+            android:id="@+id/spinnerTramo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:prompt="@string/app_name"
+            android:background="@android:color/white"
+            android:popupBackground="@android:color/white" />
+        <!-- {/ changed } -->
+
+        <!-- Luz Electricidad Roja -->
+        <TextView
+            android:id="@+id/tvRojaLabel"
+            android:text="Luz Electricidad Roja"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/cbRojaSi"
+                android:text="Si"
+                android:button="@drawable/checkbox_round"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="#FFFFFF" />
+
+            <CheckBox
+                android:id="@+id/cbRojaNo"
+                android:text="No"
+                android:button="@drawable/checkbox_round"
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- Luz Verde Titila -->
+        <TextView
+            android:id="@+id/tvVerdeLabel"
+            android:text="Luz Verde Titila"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/cbVerdeSi"
+                android:text="Si"
+                android:button="@drawable/checkbox_round"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="#FFFFFF" />
+
+            <CheckBox
+                android:id="@+id/cbVerdeNo"
+                android:text="No"
+                android:button="@drawable/checkbox_round"
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- Botón Guardar (mismo estilo) -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:text="Guardar"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_guardar_bg"
+            android:elevation="6dp" />
+
+    </LinearLayout>
+
+    <!-- Botón Volver: esquina inferior izquierda (mismo que Home), fondo transparente -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|start"
+        android:text="←"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:textColor="#000000"
+        android:elevation="0dp"
+        android:contentDescription="Volver" />
+
+</FrameLayout>

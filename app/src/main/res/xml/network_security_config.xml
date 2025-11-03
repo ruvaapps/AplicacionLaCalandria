@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Permitir cleartext (HTTP) solamente para lovar.com.ar y sus subdominios (solo para pruebas) -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">lovar.com.ar</domain>
+    </domain-config>
+
+    <!-- Por defecto mantener seguridad para otros dominios -->
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>
