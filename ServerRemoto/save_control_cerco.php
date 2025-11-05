@@ -34,10 +34,10 @@ if ($tramo === '') {
 /*
  * CONFIGURA ESTAS VARIABLES CON TU SERVIDOR
  */
-define('DB_HOST', 'TU_HOST');
-define('DB_NAME', 'TU_DB');
-define('DB_USER', 'TU_USER');
-define('DB_PASS', 'TU_PASS');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'admlova_bebidasonline');
+define('DB_USER', 'admlova_guardiaCalandria');
+define('DB_PASS', 'guardiaCalandria');
 
 $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
 
