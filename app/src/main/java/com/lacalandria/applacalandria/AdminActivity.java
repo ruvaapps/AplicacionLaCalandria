@@ -233,7 +233,17 @@ public class AdminActivity extends AppCompatActivity {
 
                             // 1) Parsear alarmas desde prefs y generar lista ordenada de slots
                             java.util.List<AlarmSlot> slots = parseAlarmsFromPrefs();
-                            Collections.sort(slots, Comparator.comparingInt(AlarmSlot::minutesOfDay));
+                            // Reemplazo para evitar uso de API 24: comparator explícito compatible hacia atrás
+                            Collections.sort(slots, new Comparator<AlarmSlot>() {
+                                @Override
+                                public int compare(AlarmSlot a, AlarmSlot b) {
+                                    int ia = a.minutesOfDay();
+                                    int ib = b.minutesOfDay();
+                                    if (ia < ib) return -1;
+                                    if (ia > ib) return 1;
+                                    return 0;
+                                }
+                            });
 
                             if (slots.isEmpty()) {
                                 // Si no hay slots, mostrar lista plana
