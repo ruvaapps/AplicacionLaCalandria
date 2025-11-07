@@ -1,6 +1,7 @@
 package com.lacalandria.applacalandria;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,10 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,15 +44,19 @@ public class ControlCercoActivity extends AppCompatActivity {
 
     private CheckBox cbRojaSi, cbRojaNo;
     private CheckBox cbVerdeSi, cbVerdeNo;
-    private Spinner spinnerTramo;
     private Button btnGuardar;
     private Button btnVolver;
     private Button btnVerCercos;
     private Button btnInstructivo;
     private TextView tvTimestamp;
 
-    private boolean spinnerInitialized = false;
+    // Nuevo: botón y texto para QR + variable que guarda la descripción del tramo escaneado
+    private Button btnEscanearQR;
+    private TextView tvTramoDesc;
+    private String scannedTramo = "";
+
     private static final String PREFS = "control_cerco";
+    private static final int SCAN_REQUEST = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,29 +148,38 @@ public class ControlCercoActivity extends AppCompatActivity {
                 });
             }
 
-            // Spinner Tramos
-            spinnerTramo = findViewById(R.id.spinnerTramo);
-            final List<String> tramos = new ArrayList<>();
-            for (int i = 1; i <= 7; i++) tramos.add("Tramo " + i);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tramos);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            if (spinnerTramo != null) spinnerTramo.setAdapter(adapter);
-            if (spinnerTramo != null) {
-                spinnerTramo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (!spinnerInitialized) {
-                            spinnerInitialized = true;
-                            return;
-                        }
-                        if (cbRojaSi != null) cbRojaSi.setChecked(false);
-                        if (cbRojaNo != null) cbRojaNo.setChecked(false);
-                        if (cbVerdeSi != null) cbVerdeSi.setChecked(false);
-                        if (cbVerdeNo != null) cbVerdeNo.setChecked(false);
-                        Toast.makeText(ControlCercoActivity.this, "Tramo: " + tramos.get(position), Toast.LENGTH_SHORT).show();
+            // Nuevo: referencias al botón de escaneo y TextView de tramo
+            btnEscanearQR = findViewById(R.id.btnEscanearQR);
+            tvTramoDesc = findViewById(R.id.tvTramoDesc);
+            if (tvTramoDesc != null) tvTramoDesc.setText("Tramo: (sin seleccionar)");
+
+            if (btnEscanearQR != null) {
+                btnEscanearQR.setOnClickListener(v -> {
+                    v.animate().scaleX(0.97f).scaleY(0.97f).setDuration(80)
+                        .withEndAction(() -> v.animate().scaleX(1f).scaleY(1f).setDuration(80)).start();
+                    // Intent a ZXing (si no está instalado se hace fallback)
+                    try {
+                        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                        startActivityForResult(intent, SCAN_REQUEST);
+                    } catch (ActivityNotFoundException e) {
+                        // fallback: pedir al usuario que pegue el contenido del QR
+                        final EditText input = new EditText(ControlCercoActivity.this);
+                        new AlertDialog.Builder(ControlCercoActivity.this)
+                                .setTitle("Ingresar código QR")
+                                .setMessage("No se encontró app de escaneo. Pega aquí el contenido del QR:")
+                                .setView(input)
+                                .setPositiveButton("Aceptar", (dialog, which) -> {
+                                    String value = input.getText().toString().trim();
+                                    if (!value.isEmpty()) {
+                                        handleScannedValue(value);
+                                    } else {
+                                        Toast.makeText(ControlCercoActivity.this, "Contenido vacío", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", null)
+                                .show();
                     }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) { }
                 });
             }
 
@@ -199,12 +215,13 @@ public class ControlCercoActivity extends AppCompatActivity {
                 });
             }
 
-            // Botón Guardar
+            // Botón Guardar: ahora usa scannedTramo (o texto mostrado)
             btnGuardar = findViewById(R.id.btnGuardar);
             if (btnGuardar != null) {
                 btnGuardar.setOnClickListener(v -> {
-                    String tramo = (spinnerTramo != null && spinnerTramo.getSelectedItem() != null)
-                            ? spinnerTramo.getSelectedItem().toString() : "";
+                    String tramo = scannedTramo != null && !scannedTramo.isEmpty()
+                            ? scannedTramo
+                            : (tvTramoDesc != null ? tvTramoDesc.getText().toString() : "");
 
                     boolean rojaSi = cbRojaSi != null && cbRojaSi.isChecked();
                     boolean rojaNo = cbRojaNo != null && cbRojaNo.isChecked();
@@ -307,5 +324,32 @@ public class ControlCercoActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Error al intentar enviar: " + e.getClass().getSimpleName(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    // Manejar resultado de escaneo ZXing
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SCAN_REQUEST) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                if (contents != null) {
+                    handleScannedValue(contents);
+                } else {
+                    Toast.makeText(this, "No se obtuvo resultado del escaneo", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Escaneo cancelado", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // Procesa el contenido del QR: aquí asumimos que el QR contiene la 'descripción del tramo'.
+    private void handleScannedValue(String value) {
+        // Si el QR contiene una estructura más compleja, parseala aquí. Por ahora se usa el texto directo.
+        scannedTramo = value;
+        if (tvTramoDesc != null) tvTramoDesc.setText("Tramo: " + scannedTramo);
+        Toast.makeText(this, "Tramo escaneado: " + scannedTramo, Toast.LENGTH_SHORT).show();
     }
 }

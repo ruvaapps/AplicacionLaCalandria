@@ -65,26 +65,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!-- Spinner Tramo -->
+        <!-- Botón Escanear QR y descripción del tramo -->
         <TextView
-            android:id="@+id/tvTramoLabel"
-            android:text="Tramo"
-            android:textSize="16sp"
+            android:id="@+id/tvTramoDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Tramo: (sin seleccionar)"
             android:textColor="#FFFFFF"
-            android:layout_marginTop="18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp" />
 
-        <!-- { changed: spinner con fondo blanco + popup blanco } -->
-        <Spinner
-            android:id="@+id/spinnerTramo"
+        <Button
+            android:id="@+id/btnEscanearQR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:prompt="@string/app_name"
-            android:background="@android:color/white"
-            android:popupBackground="@android:color/white" />
-        <!-- {/ changed } -->
+            android:text="Escanear QR"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_guardar_bg" />
 
         <!-- Luz Electricidad Roja -->
         <TextView
